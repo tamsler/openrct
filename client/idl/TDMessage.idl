@@ -1,0 +1,62 @@
+/* $Id: TDMessage.idl,v 1.2 2003/05/20 17:19:11 thomas Exp $ */
+
+/*
+ *
+ *   OpenRCT - Open Remote Collaboration Tool
+ *
+ *   Copyright (c) 2000 by Thomas Amsler
+ * 
+ *   This file is part of OpenRCT.
+ *
+ *   OpenRCT is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   OpenRCT is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with OpenRCT; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+#ifndef __TDMESSAGE_IDL__
+#define __TDMESSAGE_IDL__
+
+#include "Message.idl"
+
+/*
+ * Td messages
+ */
+
+module RCT {
+
+    /*
+     * This td message struct is used for realtime td messages
+     */
+    struct TDMessage {
+
+      Message base_msg;
+      
+      /* Each post has a unique id */ 
+      long post_id;
+      
+      /* This is a reference to the post's parent post_id */ 
+      long parent_id;
+
+      /* The post's subject */
+      wstring subject;
+      
+      /* The post's type */
+      wstring type;
+
+      /* The post's date */
+      string date;
+    };
+};
+
+#endif

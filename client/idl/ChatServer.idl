@@ -1,0 +1,76 @@
+/* $Id: ChatServer.idl,v 1.15 2003/05/08 20:14:53 thomas Exp $ */
+
+/*
+ *
+ *   OpenRCT - Open Remote Collaboration Tool
+ *
+ *   Copyright (c) 2000 by Thomas Amsler
+ * 
+ *   This file is part of OpenRCT.
+ *
+ *   OpenRCT is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   OpenRCT is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with OpenRCT; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+#ifndef __CHATSERVER_IDL__
+#define __CHATSERVER_IDL__
+ 
+
+#include "Server.idl"
+#include "ChatMessage.idl"
+#include "PermissionObj.idl"
+
+
+/*
+ * The ChatServer will handle all the chat messages
+ * from the clients.
+ */
+
+module RCT {
+
+    typedef sequence<ChatMsgHist> ChatMsgHistSeq;
+
+
+    interface ChatServer : Server {
+
+	/*
+	 * The clients call this for each chat message they
+	 * want to send.
+	 */
+	void send(in wstring chat_msg,
+		  in string version,
+		  in string user_id,
+		  in string user_alias,
+		  in ObjPermission permission,
+		  in string class_name,
+		  in string assembly_name,
+		  in long type);
+    };
+};
+
+
+
+#endif
+
+
+
+
+
+
+
+
+
+
+ 

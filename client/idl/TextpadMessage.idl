@@ -1,0 +1,83 @@
+/* $Id: TextpadMessage.idl,v 1.11 2003/05/08 20:14:53 thomas Exp $ */
+
+/*
+ *
+ *   OpenRCT - Open Remote Collaboration Tool
+ *
+ *   Copyright (c) 2000 by Thomas Amsler
+ * 
+ *   This file is part of OpenRCT.
+ *
+ *   OpenRCT is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   OpenRCT is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with OpenRCT; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+#ifndef __TEXTPADMESSAGE_IDL__
+#define __TEXTPADMESSAGE_IDL__
+
+#include "Message.idl"
+
+/*
+ * Textpad Message
+ */
+
+module RCT {
+
+    /*
+     * This textpad message struct is used for texpad notification
+     */
+    struct TextpadMessage {
+
+	Message base_msg;
+
+	/*
+	 * Name or subject
+	 */
+	wstring name;
+
+	/*
+	 * Textpad's db primary key
+	 */
+	string id;
+
+	/* 
+	 * This is the server array reference
+	 */
+	long ref;
+
+	/*
+	 * Update offset
+	 */
+	long offset;
+
+	/*
+	 * Update text
+	 */
+	wstring text;
+
+	
+    };
+
+    /*
+     * Textpad struct used for archive access
+     */
+    struct TextpadMsgHist {
+	string id;
+	wstring name;
+	string date;
+    };
+};
+
+#endif

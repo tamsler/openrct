@@ -1,0 +1,103 @@
+/* $Id: TDServer.idl,v 1.10 2003/05/21 17:09:27 thomas Exp $ */
+
+/*
+ *
+ *   OpenRCT - Open Remote Collaboration Tool
+ *
+ *   Copyright (c) 2000 by Thomas Amsler
+ * 
+ *   This file is part of OpenRCT.
+ *
+ *   OpenRCT is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   OpenRCT is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with OpenRCT; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+#ifndef __TDSERVER_IDL__
+#define __TDSERVER_IDL__
+
+
+#include "Server.idl"
+#include "PermissionObj.idl"
+
+
+/*
+ * The ThreadedDiscussionServer will handle all the TD client requests
+ */
+
+module RCT {
+
+  /*
+   * TD seq message struct
+   */
+  struct TDNode {
+    long post_id;
+    long parent_id;
+    string sender;
+    wstring subject;
+    wstring type;
+    string date;
+    boolean is_read;
+  };
+  
+
+  typedef sequence<TDNode> TDSeq;
+
+  interface TDServer : Server {
+
+    /*
+     * When users loads all messages in the TD module
+     */
+    void load(in string user_id,
+	      in string class_name,
+	      in string assembly_name,
+	      out TDSeq td_seq);
+
+    /*
+     * For posting a new message
+     */
+    void post_new_msg(in string sender_id,
+		      in string sender_alias,
+		      in string class_name,
+		      in string team_name,
+		      in wstring type,
+		      in string version,
+		      in wstring subject,
+		      in wstring text,
+		      in ObjPermission permission);
+
+    /*
+     * For posting a reply message
+     */
+    void post_reply_msg(in string sender_id,
+			in string sender_alias,
+			in string class_name,
+			in string team_name,
+			in wstring type,
+			in string version,
+			in long parent_id,
+			in wstring subject,
+			in wstring text,
+			in ObjPermission permission);
+    /*
+     * Returning the text for requested TD message
+     */
+    void get_text(in string user_id,
+		  in string post_id,
+		  in boolean is_read,
+		  out wstring text);
+  };
+};
+
+#endif // __TDSERVER_IDL__

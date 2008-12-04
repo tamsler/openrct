@@ -1,0 +1,68 @@
+// $Id: SoundServer.idl,v 1.12 2003/05/08 20:14:53 thomas Exp $
+
+/*
+ *
+ *   OpenRCT - Open Remote Collaboration Tool
+ *
+ *   Copyright (c) 2000 by Thomas Amsler
+ * 
+ *   This file is part of OpenRCT.
+ *
+ *   OpenRCT is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   OpenRCT is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with OpenRCT; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+#ifndef __SOUNDSERVER_IDL__
+#define __SOUNDSERVER_IDL__
+
+#include "Server.idl"
+#include "FileServer.idl"
+#include "PermissionObj.idl"
+#include "SoundMessage.idl"
+
+
+/*
+ * This module deals with sending sound files.
+ */
+
+module RCT {
+
+    /*
+     * The sequence fo sound structs
+     */
+    typedef sequence<FileInfo> SoundSeq;
+    typedef sequence<SoundMsgHist> SoundMsgHistSeq;
+
+    interface SoundServer : Server {
+	
+	/*
+	 * Fetching a sound file
+	 */
+	boolean fetch(in string snd_id, out BinaryFile snd_data);
+
+	/*
+	 * This returns a list of sound message information
+	 */
+	void get_sound_info_from_class_and_assembly_name(in string class_name,
+							 in string assembly_name,
+							 in long assembly_type,
+							 out SoundMsgHistSeq snd_seq);
+    };
+};
+
+#endif
+
+
+

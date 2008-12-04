@@ -1,0 +1,71 @@
+// $Id: ArchiveSelectionTodayGui.java,v 1.3 2003/05/08 20:09:03 thomas Exp $
+
+/*
+ * 
+ * OpenRCT - Open Remote Collaboration Tool
+ * 
+ * Copyright (c) 2000 by Thomas Amsler
+ * 
+ * This file is part of OpenRCT.
+ * 
+ * OpenRCT is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * OpenRCT is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * OpenRCT; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
+ *  
+ */
+
+package org.openrct.client.gui;
+
+import org.openrct.client.Const;
+import javax.swing.*;
+
+public class ArchiveSelectionTodayGui implements Const {
+
+	// Constructor
+	private ArchiveSelectionTodayGui() {
+	}
+
+	// Methods:
+	// --------
+
+	// Method:
+	public static JPanel getPage(String className, String teamName,
+			ArchivePageGui archivePage, int module) {
+
+		switch (module) {
+
+		case ARCH_MOD_CHAT:
+
+			return new ArchiveChatTodayPageGui(className, teamName, archivePage);
+
+		case ARCH_MOD_SOUND:
+
+			return new ArchiveSoundTodayPageGui(className, teamName,
+					archivePage);
+
+		case ARCH_MOD_TEXTPAD:
+
+			return new ArchiveTextpadTodayPageGui(className, teamName,
+					archivePage);
+
+		case ARCH_MOD_FTP:
+
+			return new ArchiveFtpTodayPageGui(className, teamName, archivePage);
+
+		default:
+
+			System.err.println("ERROR: Did not recognize module!");
+			return new JPanel();
+		}
+	}
+}
+

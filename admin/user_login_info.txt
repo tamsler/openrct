@@ -1,0 +1,7 @@
+INFO: (01-09-2002)
+Dear User,
+You have been granted access to the RCT Admin Tool.  Now, you can proceed to the "User Admin Tasks" area.  This Admin Tool is under development, thus proceed with caution.
+Thank you.
+
+-- The RCT TEAM
+

@@ -1,0 +1,54 @@
+# $Id: NOTES,v 1.2 2002/06/20 19:09:10 thomas Exp $
+
+
+NOTES:
+------
+
+- JacORB version: JacORB1_4_beta2
+
+- To run the client, execute:
+  jaco -DORBInitRef.NameService=corbaloc::192.168.1.10:3350/NameService Client
+
+  You don't need to pass the ORBInitRef string if you adjust the
+  jacorb.properties to match the above syntax.
+
+- Building JacORB with Notification Service: (Information provided by: Nikolas xanith@web.de)
+  In the <jacorbtop>/idl/build.xml file you got to add "notification" to some depend-targets.
+
+  These are the critical lines:
+  <!--
+  top-level targets
+  -->
+  <target name="all" depends="corba,names,security,events,transactions,concurrency,collections,trading"/>
+  <target name="services" depends="events,trading,collections,transactions,concurrency" />
+
+  Then you got to add a #include directive to the CosNotifyFilter.idl. Add #include <orb.idl>
+
+- Creat a jar archive for RCT
+  First, create a softlink in "rct-unix-client-java/classes" called "org" pointing to <path to JacORB>/classes/org>
+  Second, make sure that all the *.properties and the Manifest.mf file is in "rct-unix-client-java/classes"
+  Now we can create the rct.jar file by executing:  
+
+    jar cfm rct.jar Manifest.mf *.class RCT/*.* org/* edu/* *.properties
+  
+  Create a directory "rct_clt".  In that directory, create a sub-directory called "images". Then
+  move the rct.jar file into the "rct_clt" directory. Also copy all the client GIFs and JPGs to
+  the "rct_clt/images" directory.
+  
+  Now you can run the client within the "rct_clt" directory bye executing:
+  
+  java -Dorg.omg.CORBA.ORBClass=org.jacorb.orb.ORB -Dorg.omg.CORBA.ORBSingletonClass=org.jacorb.orb.ORBSingleton -jar rct.jar
+
+  NOTE: You can create a script "rct.sh" or "rct.bat" containing the above execution command.
+
+- If we don't have a orb.properties with JacORB entries, we can start the client with the following command:
+  java -Dorg.omg.CORBA.ORBClass=org.jacorb.orb.ORB -Dorg.omg.CORBA.ORBSingletonClass=org.jacorb.orb.ORBSingleton -jar rct.jar
+
+- Execute an application within java:
+  try {
+	Process proc = Runtime.getRuntime().exec("netscape www.yahoo.com");
+	}
+	catch (Exception e) {
+	    e.printStackTrace();
+	}
+

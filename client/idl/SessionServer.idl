@@ -1,0 +1,59 @@
+/* $Id: SessionServer.idl,v 1.11 2003/05/08 20:14:53 thomas Exp $ */
+
+/*
+ *
+ *   OpenRCT - Open Remote Collaboration Tool
+ *
+ *   Copyright (c) 2000 by Thomas Amsler
+ * 
+ *   This file is part of OpenRCT.
+ *
+ *   OpenRCT is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   OpenRCT is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with OpenRCT; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+#ifndef __SESSIONSERVER_IDL__
+#define __SESSIONSERVER_IDL__
+
+
+#include "Server.idl"
+
+
+/* 
+ * The SessionServer is the main part of the Core Module. It knows
+ * about all the other module specific servers such as
+ * ClassServer, UserServer, DatabaseServer, AuthenticationServer,
+ * etc.
+ * It will keep references to the active module servers that
+ * are registered with the omniName name server.
+ * It will also know about the general state of the RCT server,
+ * modules, which can be accessed by other servers.
+ * The SessionServer will also create the Broadcast channel 
+ * trough which we send SessionMessages.
+ */
+
+module RCT {
+
+    /* 
+     * Module Core: Session and Server-Information broker
+     */
+    interface SessionServer : Server {
+
+
+    };
+};
+
+#endif
+ 

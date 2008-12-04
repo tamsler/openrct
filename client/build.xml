@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<project name="RCT" default="build" basedir=".">
+
+<property name="idl-dir" value="idl" />
+<property name="obj-dir" value="RCT" />
+<property name="lib-dir" value="lib" />
+
+<target name="init" depends="clean-init">
+	<mkdir dir="${obj-dir}" />
+</target>
+
+<target name="clean-init">
+	<delete dir="${obj-dir}" />
+	<delete dir="${lib-dir}/${obj-dir}" />
+</target>
+
+<target name="clean-jar">
+	<delete file="${lib-dir}/OpenrctIdl.jar" />
+</target>
+
+<target name="idl" depends="init">
+	<java classname="org.jacorb.idl.parser" classpath="${java.class.path}">
+        	<arg line="idl/AuthenticationServer.idl"/>
+        	<arg line="idl/BCMessage.idl"/>
+        	<arg line="idl/ChatMessage.idl"/>
+        	<arg line="idl/ChatServer.idl"/>
+        	<arg line="idl/ClassServer.idl"/>
+        	<arg line="idl/FileServer.idl"/>
+        	<arg line="idl/DatabaseServer.idl"/>
+        	<arg line="idl/GroupServer.idl"/>
+        	<arg line="idl/Message.idl"/>
+        	<arg line="idl/PermissionObj.idl"/>
+        	<arg line="idl/PermissionPerson.idl"/>
+        	<arg line="idl/PingServer.idl"/>
+        	<arg line="idl/Server.idl"/>
+        	<arg line="idl/SessionServer.idl"/>
+        	<arg line="idl/TeamServer.idl"/>
+        	<arg line="idl/UserServer.idl"/>
+        	<arg line="idl/CourseContentServer.idl"/>
+        	<arg line="idl/SoundServer.idl"/>
+        	<arg line="idl/SoundMessage.idl"/>
+        	<arg line="idl/ControlServer.idl"/>
+        	<arg line="idl/ControlMessage.idl"/>
+        	<arg line="idl/TextpadServer.idl"/>
+        	<arg line="idl/TextpadMessage.idl"/>
+        	<arg line="idl/UrlServer.idl"/>
+        	<arg line="idl/UrlMessage.idl"/>
+        	<arg line="idl/FtpServer.idl"/>
+        	<arg line="idl/FtpMessage.idl"/>
+        	<arg line="idl/TDServer.idl"/>
+        	<arg line="idl/TDMessage.idl"/>
+        	<arg line="idl/AdminServer.idl"/>
+        </java>
+</target>
+
+<target name="compile">
+	<javac srcdir="${obj-dir}" destdir="${lib-dir}" />
+</target>
+
+<target name="build" depends="compile">
+    <jar destfile="${lib-dir}/OpenrctIdl.jar" basedir="${lib-dir}" />
+</target>
+
+</project>
+
+

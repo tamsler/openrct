@@ -1,0 +1,70 @@
+# $Id: ChangeLog,v 1.8 2003/07/10 17:01:33 thomas Exp $
+
+OpenRCT Server v1.6.0
+=====================
+2004-12-04 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Bugfix: Sound and File packets not assigning all the structure fields
+* Adjust for latest OmniORB and OmniNotify versions
+
+
+OpenRCT Server v1.5.0
+=====================
+2003-07-10 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Show size of Course Content files
+* Add Threaded Discussion module
+* All modules use data upload/download packages and allow to cancel now.
+	
+
+OpenRCT Server v1.4.0
+=====================
+2003-03-14 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Change data/file upload to use packages and allow user to cancel upload.
+* Add capability to open/edit existing text pad.
+* Show size of files and sound messages.
+
+
+OpenRCT Server v1.3.0
+=====================
+2002-12-10 Thomas Amsler <amsler@cs.ucdavis.edu>
+* No Changes
+
+
+OpenRCT Server v1.2.0
+=====================
+2002-11-25 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Adding URL Module
+* Adding Ftp Module
+* Started to create a CONST file per module
+* Take advantage of serveral database Views
+
+
+OpenRCT Server v1.1.0
+=====================
+2002-10-29 Thomas Amsler <amsler@cs.ucdavsi.edu>
+* Adding store and forward sound module
+* Adjust SoundServer IDL for changes in FileServer IDL
+* Adjust SoundModule.send() method to FileModule.send() api changes
+* Adjust CourseContentServer for changes in FileServer
+* Implement FileServer's send() method
+* Adding textpad module
+
+
+OpenRCT Server v1.0.0
+=====================
+2002-07-15 Thomas Amsler <amsler@cs.ucdavsi.edu>
+* No Changes
+
+
+OpenRCT Server v1.0.0-RC2
+=========================
+2002-07-08  Thomas Amsler <amsler@cs.ucdavis.edu>
+* Using clients version number during login process to determine
+  client/server compatibility.
+* Write the clients version to the user logging table
+
+
+OpenRCT Server v1.0.0-RC1
+=========================
+2002-06-23 Thomas Amsler <amsler@cs.ucdavsi.edu>
+* Initial release
+

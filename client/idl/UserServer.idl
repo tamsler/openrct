@@ -1,0 +1,180 @@
+/* $Id: UserServer.idl,v 1.25 2003/05/08 20:14:53 thomas Exp $ */
+
+/*
+ *
+ *   OpenRCT - Open Remote Collaboration Tool
+ *
+ *   Copyright (c) 2000 by Thomas Amsler
+ * 
+ *   This file is part of OpenRCT.
+ *
+ *   OpenRCT is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   OpenRCT is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with OpenRCT; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+#ifndef __USERSERVER_IDL__
+#define __USERSERVER_IDL__
+
+
+#include "Server.idl"
+#include "FileServer.idl"
+
+
+/*
+ * The UserServer knows everything about users. It keeps track
+ * of all the users in a sequence. The UserServer accepts
+ * requests for information pertaining to users.
+ */
+
+module RCT {
+    
+    /*
+     * User structure.
+     */
+    struct User {
+	string user_id;
+	string alias;
+	string first_name;
+	string last_name;
+	string password;
+	string permission;
+	string online_status;
+	string date;
+    };
+
+    /*
+     * The UserServer keeps track of all users
+     * in a User sequence.
+     */
+
+    typedef sequence<User> UserSeq;
+    typedef sequence<string> UserIdSeq;
+    typedef sequence<string> UserAliasSeq;
+
+    interface UserServer : Server {
+	
+	/*
+	 * Returning a user that has the given userId.
+	 */
+	User get_user_from_user_id(in string user_id);
+
+	/*
+	 * Returning a user that has the given userId.
+	 */
+	User get_user_from_user_alias(in string alias);
+
+	/*
+	 * Returning a list of users for a class.
+	 */
+	void get_users_from_class_name(in string class_name, out UserSeq user_seq);
+
+	/*
+	 * Returning a list of users for a team.
+	 */
+	void get_users_from_team_name(in string class_name,
+				      in string team_name, 
+				      out UserSeq user_seq);
+
+	/*
+	 * Returning a list of user ids from a team.
+	 */
+	void get_user_ids_from_team_name(in string class_name,
+					 in string team_name,
+					 out UserIdSeq user_id_seq);
+
+	/*
+	 * Returning a list of users for a group.
+	 */
+	void get_users_from_group_name(in string class_name,
+				       in string group_name, 
+				       out UserSeq user_seq);
+
+	/*
+	 * Returning a list of user ids from a group.
+	 */
+	void get_user_ids_from_group_name(in string class_name,
+					  in string group_name,
+					  out UserIdSeq user_id_seq);
+
+	/*
+	 * Returning a list of users related by a class
+	 */
+	void get_users_related_by_classes(in string user_name, out UserSeq user_seq);
+
+	/*
+	 * Returning a list of all users.
+	 */
+	void get_all_users(out UserSeq user_seq);
+
+	/*
+	 * Get users who are online in a team
+	 */
+	void get_online_users_from_team_name(in string class_name,
+					     in string team_name,
+					     out UserSeq user_seq);
+
+	/*
+	 * Returning a list of user ids for a team, users are online
+	 */
+	void get_online_user_ids_from_team_name(in string class_name,
+						in string team_name,
+						out UserIdSeq user_id_seq);
+	
+	/*
+	 * Get the user image file name and location
+	 */
+	boolean get_user_image(in string user_alias,
+			       out string user_id,
+			       out FileInfo file_info,
+			       out BinaryFile file_data);
+
+
+	/*
+	 * Getting the user queue for a specified module
+	 */
+	void get_module_control_queue_users(in string class_name,
+					    in string assembly_name,
+					    in string module_name,
+					    out UserAliasSeq user_alias_seq,
+					    in long type);
+
+	/*
+	 * Check if the user is the manager of an assembly
+	 */
+	boolean is_user_manager_of_assembly(in string class_name,
+					    in string assembly_name,
+					    in string user_id,
+					    in long type);
+    };
+};
+
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

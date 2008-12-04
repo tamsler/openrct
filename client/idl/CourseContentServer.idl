@@ -1,0 +1,90 @@
+/* $Id: CourseContentServer.idl,v 1.21 2003/05/08 20:14:53 thomas Exp $ */
+
+/*
+ *
+ *   OpenRCT - Open Remote Collaboration Tool
+ *
+ *   Copyright (c) 2000 by Thomas Amsler
+ * 
+ *   This file is part of OpenRCT.
+ *
+ *   OpenRCT is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   OpenRCT is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with OpenRCT; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+#ifndef __COURSECONTENTSERVER_IDL__
+#define __COURSECONTENTSERVER_IDL__
+
+#include "Server.idl"
+#include "FileServer.idl"
+
+/*
+ * The CourseContentServer will handle all the cc file
+ * management on the server side with the help
+ * of the DB server.
+ */
+
+module RCT {
+
+    /*
+     * CC Info struct
+     */
+    struct CCInfo {
+	string id;
+	string alias;
+	string name;
+	string location;
+	string source;
+	string mime_type;
+	string class_id;
+	string visible;
+	string permission;
+        string length;
+	string date;
+	string version;
+    };
+
+    /*
+     * The sequence of course contents for a class
+     */
+    typedef sequence<CCInfo> CourseContentSeq;
+    
+    interface CourseContentServer : Server {
+
+	/*
+	 * The method returns a cours content
+	 */
+	boolean fetch(in string cc_id,
+		      out BinaryFile file_data);
+
+	/*
+	 * This returns the list of course content for a particular class
+	 */
+	void get_course_content_from_class_name(in string class_name,
+						out CourseContentSeq cc_seq);
+    };
+};
+
+#endif
+
+
+
+
+
+
+
+
+
+

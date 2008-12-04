@@ -1,0 +1,64 @@
+# $Id: ChangeLog,v 1.10 2003/07/10 16:30:33 thomas Exp $
+
+OpenRCT Admin v1.6.0
+====================
+2004-12-04 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Bugfix: ambigous rct_date reference in DB call
+
+
+OpenRCT Admin v1.5.0
+====================
+2003-07-10 Thomas Amsler <amsler@cs.ucdavis.edu>
+* No Changes
+
+
+OpenRCT Admin v1.4.0
+====================
+2003-03-14 Thomas Amsler <amsler@cs.ucdavis.edu>
+* No Changes
+
+
+OpenRCT Admin v1.3.0
+====================
+2002-12-10 Thomas Amsler <amsler@cs.ucdavis.edu>
+* No Changes
+
+
+OpenRCT Admin v1.2.0
+====================
+2002-11-25 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Adding data access for Sound, Textpad, adn Ftp modules
+* Further extracted common code
+* Take advangage of serveral views
+
+
+OpenRCT Admin v1.1.0
+====================
+2002-10-29 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Adjust for new fields [ version, permission ] in the 
+  rct_files table. Changes made to Course Content for both
+  the admin and manager level
+* Extract all common code
+* Move Course Content up
+
+
+OpenRCT Admin v1.0.0
+====================
+2002-07-15 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Bugfix: Input checking for single and double quotes
+
+
+OpenRCT Admin v1.0.0-RC2
+========================
+2002-07-08  Thomas Amsler <amsler@cs.ucdavis.edu>
+* Finished adding manager level admin
+* Finished adding user level admin
+* Adjusted for table consolidation, only using rct-files
+* New logo and added version number in page header
+
+
+OpenRCT Admin v1.0.0-RC1
+========================
+2002-06-23 Thomas Amsler <amsler@cs.ucdavsi.edu>
+* Initial release
+

@@ -1,0 +1,66 @@
+/* $Id: ClassServer.idl,v 1.13 2002/06/20 19:09:11 thomas Exp $ */
+
+#ifndef __CLASSSERVER_IDL__
+#define __CLASSSERVER_IDL__
+
+
+#include "Server.idl"
+
+
+/*
+ * The ClassServer knows everything about classes. It keeps 
+ * track of all the classes in a sequence. The ClassServer accepts
+ * requests for information pertaining to classes.
+ */
+
+module RCT {
+
+    /*
+     * Class structure.
+     */
+    struct Class {
+	string class_id;
+	string name;
+	string permission;
+	string active_status;
+	string date;
+	string manager;
+    };
+
+    /* 
+     * The ClassServer keeps track of all classes
+     * in a Class sequence.
+     */
+    typedef sequence<Class> ClassSeq;
+
+    interface ClassServer : Server {
+    
+    	/*
+	 * A user can request a list of classes he/she 
+	 * has access to.
+	 */
+	void get_classes_from_user_id(in string user_id, out ClassSeq class_seq);
+
+	/*
+	 * Generate class sequence with classes that are relevant for two users
+	 */
+	void get_classes_from_user_ids(in string user_id1,
+				       in string user_id2,
+				       out ClassSeq class_seq);
+
+	/*
+	 * This will return a list containing all classes
+	 */
+	void get_all_classes(out ClassSeq class_seq);
+
+    };
+};
+
+#endif
+
+
+
+
+
+
+

@@ -1,0 +1,92 @@
+/* $Id: AuthenticationServer.idl,v 1.20 2003/05/14 19:56:44 thomas Exp $ */
+
+/*
+ *
+ *   OpenRCT - Open Remote Collaboration Tool
+ *
+ *   Copyright (c) 2000 by Thomas Amsler
+ * 
+ *   This file is part of OpenRCT.
+ *
+ *   OpenRCT is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   OpenRCT is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with OpenRCT; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+#ifndef __AUTHENTICATIONSERVER_IDL__
+#define __AUTHENTICATIONSERVER_IDL__
+
+#include "Server.idl"
+
+/*
+ * The AuthenticationServer will handle the login process.
+ * It will retrun an AuthResponse object per login.
+ */
+
+module RCT {
+
+    /*
+     * Authentication response struct
+     */
+    struct AuthResponse {
+	boolean granted;
+	string reason;
+    };
+
+    interface AuthenticationServer : Server {
+	
+	/*
+	 * This method will be called during the authentication process
+	 */
+	AuthResponse authenticate(in string user_id,
+				  in string password,
+				  in long auth_level,
+				  in string version);
+
+	/*
+	 * This method will send a message to the BC channel, letting 
+	 * everybody know that a client has connected
+	 * The data field is a client generated login message
+	 * We return the login time/data
+	 */
+	string login(in long type,
+		     in string user_id,
+		     in string user_alias,
+		     in string first_name,
+		     in string last_name,
+		     in string data,
+		     in string ip,
+		     in string os,
+		     in string version);
+
+	/*
+	 * This method will initiate all the user related logout activities
+	 * The msg field is a client generated logout message
+	 */
+	void logout(in long type,
+		    in string user_alias,
+		    in string password,
+		    in string msg,
+		    in string user_on,
+		    in string version,
+		    in boolean status);
+
+    };
+};
+
+#endif
+
+
+
+

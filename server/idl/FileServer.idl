@@ -1,0 +1,186 @@
+/* $Id: FileServer.idl,v 1.30 2003/05/08 20:14:53 thomas Exp $ */
+
+/*
+ *
+ *   OpenRCT - Open Remote Collaboration Tool
+ *
+ *   Copyright (c) 2000 by Thomas Amsler
+ * 
+ *   This file is part of OpenRCT.
+ *
+ *   OpenRCT is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   OpenRCT is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with OpenRCT; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+#ifndef __FILESERVER_IDL__
+#define __FILESERVER_IDL__
+
+#include "Server.idl"
+#include "PermissionObj.idl"
+#include "Message.idl"
+
+/*
+ * The FileServer will handle all the file
+ * management on the server side with the help
+ * of the DB server.
+ */
+
+module RCT {
+
+    /*
+     * File Info struct
+     */
+    struct FileInfo {
+	string id;
+	wstring alias;
+	string name;
+	string location;
+	string source;
+	string mime_type;
+	string class_id;
+	string team_id;
+	string group_id;
+	string user_id;
+	string rct_module;
+	string visible;
+	string permission;
+	string date;
+	string version;
+	string length;
+    };
+
+    /*
+     * Sequence of octets holding a file data block
+     */
+    typedef sequence<octet> BinaryPacket;
+
+    /*
+     * A structure used to send file packets. If a file
+     * is too big, we need to breack it up into packets
+     * and send the packets in sequence.
+     */
+    struct FilePacket {
+	long seq_num;
+	BinaryPacket packet;
+    };
+
+    /*
+     * This struct is used to send file data packages
+     * to the client.
+     */
+    struct FilePacketMessage {
+	Message base_msg;
+	string id;
+	long packet_type;
+	BinaryPacket packet;
+    };
+    
+    /*
+     * Sequence of octets holding the file's data
+     */
+    typedef sequence<octet> BinaryFile;
+
+    /*
+     * Sequence of file infos
+     */
+    typedef sequence<FileInfo> FileInfoSeq;
+    
+    interface FileServer : Server {
+
+	/*
+	 * Exception: FileIO
+	 * Throw this exception if we encounter any file problems.
+	 */
+	exception FileIOException {
+	    string error_msg;
+	};
+
+	/*
+	 * Request a File DB index
+	 */
+	string get_index();
+
+	/*
+	 * This method is called at the beginning of a file
+	 * transfer.
+	 */
+	void start_transfer(in string name)
+	    raises(FileIOException);
+
+	/*
+	 * This method is called at the end of a file transfer.
+	 */
+	void end_transfer(in string id,
+			  in wstring alias,
+			  in string name,
+			  in string mime_type,
+			  in string class_name,
+			  in string assembly_name,
+			  in string user_id,
+			  in string user_alias,
+			  in string version,
+			  in string rct_module,
+			  in long type,
+			  in ObjPermission permission,
+			  in string length);
+
+	/*
+	 * This method is called to transfer a file packet
+	 */
+	void send_packet(in string name,
+			 in FilePacket packet)
+	    raises(FileIOException);
+
+	/*
+	 * This method is called to cancel a file upload/download
+	 * that is in progress.
+	 */
+	void cancel_transfer(in string name)
+	    raises(FileIOException);
+
+	/*
+	 * This method is called to start the download of a file
+	 */
+	void start_download(in string id,
+			    in string user_id,
+			    in string user_alias,
+			    in string class_name,
+			    in string assembly_name,
+			    in string version,
+			    in long type,
+			    in long packet_size)
+	    raises(FileIOException);
+
+	/*
+	 * This method is called to cancel the download of a file
+	 */
+	void cancel_download(in string id,
+			     in string user_id,
+			     in string classn_name,
+			     in string assembly_name)
+	    raises(FileIOException);
+    };
+};
+
+#endif
+
+
+
+
+
+
+
+
+

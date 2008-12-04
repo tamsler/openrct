@@ -1,0 +1,211 @@
+/* $Id: TeamServer.idl,v 1.30 2003/05/08 20:14:53 thomas Exp $ */
+
+/*
+ *
+ *   OpenRCT - Open Remote Collaboration Tool
+ *
+ *   Copyright (c) 2000 by Thomas Amsler
+ * 
+ *   This file is part of OpenRCT.
+ *
+ *   OpenRCT is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   OpenRCT is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with OpenRCT; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+#ifndef __TEAMSERVER_IDL__
+#define __TEAMSERVER_IDL__
+
+#include "Server.idl"
+#include "ChatServer.idl"
+#include "SoundServer.idl"
+#include "TextpadServer.idl"
+#include "FtpServer.idl"
+
+/*
+ * The team server knows everything about teams. It keeps
+ * track of all the teams in a sequence. The TeamServer
+ * accepts requests for information pertaining to teams.
+ */
+
+module RCT {
+    
+    /*
+     * Team structure.
+     */
+    struct Team {
+	string team_id;
+	string name;
+	string class_id;
+	string permission;
+	string active_status;
+	string date;
+	string manager;
+    };
+
+    typedef sequence<Team> TeamSeq;
+
+    interface TeamServer : Server {
+
+	/*
+	 * Exception: DataSelectionExceedsLimit
+	 * Throw this exception if too much data was selected 
+	 * through an archive query
+	 */
+	exception DataSelectionExceedsLimit {
+	    string error_msg;
+	};
+	
+	/*
+	 * A user can request a list of teams he/she 
+	 * has access to.
+	 */
+	void get_teams_from_user_and_class(in string user_id1,
+					   in string user_id2,
+					   in string class_id,
+					   out TeamSeq team_seq);
+
+	/*
+	 * Create a team sequence with teams that belong
+	 * to a certain class.
+	 */
+	void get_teams_from_class_name(in string class, out TeamSeq team_seq);
+
+	/*
+	 * Create a team sequence with teams that the user
+	 * is active in.
+	 */
+	void get_teams_user_is_active_in(in string user_id, out TeamSeq team_seq);
+
+	/*
+	 * This will return a list containing all teams
+	 */
+	void get_all_teams(out TeamSeq team_seq);
+
+	/*
+	 * Join Team -- simply means become active in the team
+	 */
+	boolean join_team(in string class_name, 
+			  in string team_name, 
+			  in string user_id,
+			  in string alias);
+
+	/*
+	 * Exit Team -- simply means become inactive in the team
+	 */
+	void exit_team(in string class_name, 
+		       in string team_name, 
+		       in string user_id,
+		       in string alias);
+
+	/*
+	 * Returns whether the user is currently active in a team
+	 */
+	boolean is_user_active_in_team(in string class_name, 
+				       in string team_name, 
+				       in string user_id,
+				       in string alias);
+
+	/*
+	 * Sends the team chat archive for requested (time period)
+	 */
+	void get_chat_archive_time_range(in string class_name,
+					 in string team_name,
+					 in string from_date,
+					 in string to_date,
+					 out ChatMsgHistSeq chat_msg_seq)
+	    raises(DataSelectionExceedsLimit);
+
+	/*
+	 * Sends the team sound archive for requested time range
+	 */
+	void get_sound_archive_time_range(in string class_name,
+					  in string team_name,
+					  in string from_date,
+					  in string to_date,
+					  out SoundMsgHistSeq snd_msg_seq)
+	    raises(DataSelectionExceedsLimit);
+
+	/*
+	 * Sends the team textpad archive for requested time range
+	 */
+	void get_textpad_archive_time_range(in string class_name,
+					    in string team_name,
+					    in string from_date,
+					    in string to_date,
+					    out TextpadMsgHistSeq textpad_msg_seq)
+	    raises(DataSelectionExceedsLimit);
+
+	/*
+	 * Sends the team ftp archive for requested time range
+	 */
+	void get_ftp_archive_time_range(in string class_name,
+					in string team_name,
+					in string from_date,
+					in string to_date,
+					out FtpMsgHistSeq ftp_msg_seq)
+	    raises(DataSelectionExceedsLimit);
+	
+	/*
+	 * Sends the team chat archive for requested (last n messages)
+	 */
+	void get_chat_archive_last_n(in string class_name,
+				     in string team_name,
+				     in long num_msg,
+				     out ChatMsgHistSeq chat_msg_seq)
+	    raises(DataSelectionExceedsLimit);
+
+	/*
+	 * Sends the team sound archive for requested last n messages
+	 */
+	void get_sound_archive_last_n(in string class_name,
+				      in string team_name,
+				      in long num_snd,
+				      out SoundMsgHistSeq sdn_msg_seq)
+	    raises(DataSelectionExceedsLimit);
+
+	/*
+	 * Sends the team textpad archive for requested last n messages
+	 */
+	void get_textpad_archive_last_n(in string class_name,
+					in string team_name,
+					in long num_textpad,
+					out TextpadMsgHistSeq textpad_msg_seq)
+	    raises(DataSelectionExceedsLimit);
+
+	/*
+	 * Sends the team ftp archive for requested last n messages
+	 */
+	void get_ftp_archive_last_n(in string class_name,
+				    in string team_name,
+				    in long num_ftp_info,
+				    out FtpMsgHistSeq ftp_msg_seq)
+	    raises(DataSelectionExceedsLimit);
+    };
+};
+
+
+#endif
+
+
+
+
+
+
+
+
+
+
+
+

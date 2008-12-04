@@ -1,0 +1,199 @@
+/* $Id: GroupServer.idl,v 1.22 2003/05/08 20:14:53 thomas Exp $ */
+
+/*
+ *
+ *   OpenRCT - Open Remote Collaboration Tool
+ *
+ *   Copyright (c) 2000 by Thomas Amsler
+ * 
+ *   This file is part of OpenRCT.
+ *
+ *   OpenRCT is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   OpenRCT is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with OpenRCT; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+#ifndef __GROUPSERVER_IDL__
+#define __GROUPSERVER_IDL__
+
+#include "Server.idl"
+#include "ChatServer.idl"
+#include "SoundServer.idl"
+#include "FtpServer.idl"
+
+
+/* The group server knows everything about groups. It keeps
+ * track of all the groups in a sequence. The GroupServer
+ * accepts requests for information pertaining to groups.
+ */
+
+
+module RCT {
+    
+    /*
+     * Group structure.
+     */
+    struct Group {
+	string group_id;
+	string name;
+	string class_id;
+	string permission;
+	string date;
+	string manager;
+    };
+
+
+    typedef sequence<Group> GroupSeq;
+
+    interface GroupServer : Server {
+	
+	/*
+	 * Exception: DataSelectionExceedsLimit
+	 * Throw this exception if too much data was selected 
+	 * through an archive query
+	 */
+	exception DataSelectionExceedsLimit {
+	    string error_msg;
+	};
+	
+
+	/*
+	 * A user can request a list of groups he/she 
+	 * has access to.
+	 */
+	void get_groups_from_user_and_class(in string user_id,
+					    in string class_id,
+					    out GroupSeq group_seq);
+
+	/*
+	 * Generate group sequence for a class
+	 */
+	void get_groups_from_class(in string class_id, out GroupSeq group_seq);
+
+	/*
+	 * Create a group sequence with groups that belong
+	 * to a certain class.
+	 */
+	void get_groups_from_class_name(in string class, out GroupSeq group_seq);
+
+	/*
+	 * This will return a list containing all groups
+	 */
+	void get_all_groups(out GroupSeq group_seq);
+
+	/*
+	 * Creating a new group
+	 */
+	boolean create_group(in string class_name,
+                             in string group_name,
+                             in string user_id,
+ 			     in string alias);
+
+	/*
+	 * Request to join a group
+	 */
+	void join_group_request(in string class_name, 
+				in string group_name, 
+				in string user_id,
+				in string alias);
+
+	/*
+	 * Reply from group leader to group join request message from requester
+	 */
+	void join_group_request_reply(in string class_name, 
+				      in string group_name, 
+				      in string user_id,
+				      in string alias,
+				      in string requester,
+				      in boolean granted);
+
+	/*
+	 * Group member wants to exit the group.
+	 * The status indicates if the exit_group
+	 * was called normal or abnormal. Abnormal
+	 * would indicate that the client crashed
+	 */
+	void exit_group(in string class_name, 
+			in string group_name, 
+			in string user_id,
+			in string alias,
+			in boolean status);
+			
+	/* 
+	 * When the group manager exits the server asks him/her to 
+	 * select a new manager -- this function is called by the 
+	 * manager to set the new manager
+	 */
+	void set_new_manager(in string class_name, 
+			     in string group_name, 
+			     in string user_id,
+			     in string alias,
+			     in string new_mgr_alias);
+
+	/*
+	 * Method to test if a certain user is in a group
+	 */
+	boolean is_user_in_group(in string class_name,
+				 in string group_name,
+				 in string alias);
+
+	/*
+	 * Method that returns the user id of a group mgr
+	 */
+	string get_manager_id(in string class_name,
+			      in string group_name);
+
+	/*
+	 * Sends the requested number, N, of group chat messages.
+	 * If N is greater than the available number of messages,
+	 * we only send the vailabel messages
+	 */
+	void get_chat_archive_last_n(in string class_name,
+				     in string group_name,
+				     in long num_msg,
+				     out ChatMsgHistSeq chat_msg_seq)
+	    raises(DataSelectionExceedsLimit);
+	
+	/*
+	 * Sends the requested number, N, of group sound messages.
+	 * If N is greater than the available number of messages,
+	 * we only send the vailabel messages
+	 */
+	void get_sound_archive_last_n(in string class_name,
+				     in string group_name,
+				     in long num_msg,
+				     out SoundMsgHistSeq sound_msg_seq)
+	    raises(DataSelectionExceedsLimit);
+
+	/*
+	 * Sends the requested number, N, of group ftp messages.
+	 * If N is greater than the available number of messages,
+	 * we only send the vailabel messages
+	 */
+	void get_ftp_archive_last_n(in string class_name,
+				     in string group_name,
+				     in long num_msg,
+				     out FtpMsgHistSeq ftp_msg_seq)
+	    raises(DataSelectionExceedsLimit);
+    };
+};
+
+#endif
+
+
+
+
+
+
+

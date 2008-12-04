@@ -1,0 +1,62 @@
+# $Id: ChangeLog,v 1.15 2003/07/10 16:31:01 thomas Exp $
+
+OpenRCT DB v1.6.0
+=================
+2004-12-04 Thomas Amsler <amsler@cs.ucdavis.edu>
+* No Changes
+
+OpenRCT DB v1.5.0
+=================
+2003-06-30 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Adding length field to course content
+* Adding support for Threaded Discussion Module
+
+
+OpenRCT DB v1.4.0
+=================
+2003-03-14 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Show size of files and sound messages.
+* Two DB init files. One for deleting all tables and one for adding
+  initial tables and data.
+
+
+OpenRCT DB v1.3.0
+=================
+2002-12-10 Thomas Amsler <amsler@cs.ucdavis.edu>
+* No Changes
+
+
+OpenRCT DB v1.2.0
+=================
+2002-11-25 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Addes rct_team_textpads_view, rct_group_textpads_view,
+  rct_team_sounds_view, rct_group_sounds_view,
+  rct_files_view, rct_chat_log_teams_view, rct_chat_log_groups_view,
+  rct_team_ftp_view, rct_group_ftp_view views
+
+
+OpenRCT DB v1.1.0
+=================
+2002-10-29 Thomas Amsler <amsler@cs.ucdavis.edi>
+* Added "version" and "permission" fields to the rct_files table.
+  Adjusted test data for these changes.
+* Adding tables for sound and textpad module
+* Make use to VIEWS
+
+
+OpenRCT DB v1.0.0
+=================
+2002-07-15 Thomas Amsler <amsler@cs.ucdavsi.edu>
+* No Changes
+
+OpenRCT DB v1.0.0-RC2
+=====================
+2002-07-08  Thomas Amsler <amsler@cs.ucdavis.edu>
+* Adding version field to rct-user-logging
+
+
+OpenRCT DB v1.0.0-RC1
+=====================
+2002-06-23 Thomas Amsler <amsler@cs.ucdavsi.edu>
+* Initial release
+

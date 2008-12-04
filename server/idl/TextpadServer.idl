@@ -1,0 +1,123 @@
+/* $Id: TextpadServer.idl,v 1.11 2003/05/08 20:14:53 thomas Exp $ */
+
+/*
+ *
+ *   OpenRCT - Open Remote Collaboration Tool
+ *
+ *   Copyright (c) 2000 by Thomas Amsler
+ * 
+ *   This file is part of OpenRCT.
+ *
+ *   OpenRCT is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   OpenRCT is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with OpenRCT; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+#ifndef __TEXTPADSERVER_IDL__
+#define __TEXTPADSERVER_IDL__
+
+#include "Server.idl"
+#include "TextpadMessage.idl"
+#include "PermissionObj.idl"
+
+
+/*
+ * The TextpadServer will handle the client's TEXTPAD invocation.
+ */
+
+module RCT {
+
+    typedef sequence<TextpadMsgHist> TextpadMsgHistSeq;
+
+    interface TextpadServer : Server {
+
+	/*
+	 * This method is called whenever a textpad updated occured
+	 */
+	void update(in wstring text,
+		    in long offset,
+		    in long textpad_ref,
+		    in string version,
+		    in string user_id,
+		    in string user_alias,
+		    in ObjPermission permission,
+		    in string class_name,
+		    in string assembly_name,
+		    in long type);
+
+	/*
+	 * This method is called when a new textpad is created
+	 */
+	boolean create(in wstring name,
+		       in string version,
+		       in string user_id,
+		       in string user_alias,
+		       in ObjPermission permission,
+		       in string class_name,
+		       in string assembly_name,
+		       in long type);
+
+	/*
+	 * This method is called when a textpad needs to be edited
+	 */
+	boolean edit(in string textpad_id,
+		     in string version,
+		     in string user_id,
+		     in string user_alias,
+		     in ObjPermission permission,
+		     in string class_name,
+		     in string assembly_name,
+		     in long type);
+
+	/*
+	 * This method is called when someone closes the textpad
+	 */
+	void close(in string textpad_id,
+		   in long textpad_ref,
+		   in string version,
+		   in string user_id,
+		   in string user_alias,
+		   in ObjPermission permission,
+		   in string class_name,
+		   in string assembly_name,
+		   in long type);
+
+	/*
+	 * The Textpad calls this message when it gets instanciated
+	 * to check if there is a textpad active.  
+	 */
+	boolean is_active(in string class_name,
+			  in string assembly_name,
+			  in long type,
+			  out wstring name,
+			  out string id,
+			  out long ref,
+			  out wstring text);
+
+	/*
+	 * Returning the text for requested textpad
+	 */
+	boolean get_text(in string id,
+			 out wstring text);
+
+    };
+};
+
+#endif
+
+
+
+
+
+

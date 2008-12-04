@@ -1,0 +1,84 @@
+# $Id: ChangeLog,v 1.9 2003/07/10 17:00:26 thomas Exp $
+
+OpenRCT Client v1.6.0
+=====================
+2004-10-03 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Using latest version of omniORB and JacORB
+* Bugfix: File retrieval hang from server in sound and ftp module
+* Using Eclipse IDE
+* Adjust platform, IP, and Java version testing
+* Spelling errors in RCT.properties
+
+
+OpenRCT Client v1.5.0
+=====================
+2003-07-10 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Add Threaded Discussion Module
+* Do not allow IP 169.254.X.Y client connections
+* Show size of Course Content files
+* All modules use data upload/download packages and allow to cancel now.
+* Package OpenRCT as "package org.openrct.client"
+
+OpenRCT Client v1.4.0
+=====================
+2003-03-14 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Run file upload, sound upload, URL checking, in worker thread.
+* Change data/file upload to use packages and allow user to cancel upload.
+* Client can determine its bandwidth (LAN | DSL/Cable Modem | Dialup Modem).
+* Add capability to open/edit existing text pad.
+* At client startup/authentication provide a list of servers.
+* Move all the configuration files to user space at startup.
+* Show chat module all the time.
+* Highlight owner's chat messages.
+* Add timestamp to archived chat messages.
+* Show size of files and sound messages.
+
+
+OpenRCT Client v1.3.0
+=====================
+2002-12-10 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Adding capability to connect from behind a firewall,
+  bypassing NAT. At startup, the client configures
+  itself and uses either Push or Pull to access events.
+
+
+OpenRCT Client v1.2.0
+=====================
+2002-11-25 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Adding URL Module
+* Adding FTP Module
+* Adding compatible operating system platform detection
+
+
+OpenRCT Client v1.1.0
+=====================
+2002-10-29 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Adding store and forward sound module
+* Adjust SoundModule.send() method to FileModule.send() api changes
+* Adding Textpad module
+* Enhanced error detection in terms of server crash, firewall issues etc.
+
+
+OpenRCT Client v1.0.0
+=====================
+2002-07-15 Thomas Amsler <amsler@cs.ucdavis.edu>
+* Bugfix: Testing input strings for single and double quotes
+* Bugfix: Simplify the About Dialog and view frame correctly for MAC OS-X
+* Adding URL start support for Win98
+
+
+OpenRCT Client v1.0.0-RC2
+=========================
+2002-07-08  Thomas Amsler <amsler@cs.ucdavis.edu>
+* Changed login logo to OpenRCT
+* Adding beep notification to chat, login, logout messages
+* Tested with JDK 1.3.1_04
+* Client sends version number during login process
+* Rename data directory to data_<login name>
+
+
+OpenRCT Client v1.0.0-RC1
+=========================
+2002-06-23 Thomas Amsler <amsler@cs.ucdavsi.edu>
+* Initial release
+
